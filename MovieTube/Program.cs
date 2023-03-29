@@ -1,5 +1,5 @@
+global using MovieTube.Models;
 using Microsoft.EntityFrameworkCore;
-using MovieTube.Models;
 
 namespace MovieTube
 {
