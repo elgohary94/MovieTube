@@ -11,7 +11,12 @@ namespace MovieTube.Controllers
     [Route("[controller]")]
     public class UserMoviesController : Controller
     {
-        
+        private readonly IUserMovieRepository _userMovieRepository;
+
+        public UserMoviesController(IUserMovieRepository userMovieRepository)
+        {
+            _userMovieRepository = userMovieRepository;
+        }
 
         public IActionResult Index()
         {

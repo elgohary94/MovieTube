@@ -6,9 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MovieTube.Controllers.Repositories
 {
-    public class UserMovieRepository
+    public class UserMovieRepository : IUserMovieRepository
     {
-        public MovieDbContext _Context;
+        private readonly MovieDbContext _Context;
         public UserMovieRepository(MovieDbContext context)
         {
             _Context = context;
@@ -18,6 +18,13 @@ namespace MovieTube.Controllers.Repositories
         public async Task<List<Movie>> GetAllMovies()
         {
             return await _Context.Movies.ToListAsync();
+        }
+
+        public async Task<Movie> CreateMovie(Movie movie)
+        {
+            await _Context.Movies.AddAsync(movie);
+            await _Context.SaveChangesAsync();
+            return movie;
         }
 
         public async Task<Movie> UpdateMovie(int id, Movie movie)
@@ -36,6 +43,17 @@ namespace MovieTube.Controllers.Repositories
                await _Context.SaveChangesAsync();
 
                return OneMovie;
+        }
+
+        public async Task<Movie> DeleteMovie(int id)
+        {
+            var OneMovie = await _Context.Movies.FirstOrDefaultAsync(m => m.ID == id);
+            if(OneMovie is not null )
+            {
+                _Context.Remove(OneMovie);
+            }
+
+            return OneMovie;
         }
     }
 }

@@ -1,4 +1,5 @@
 global using MovieTube.Models;
+global using MovieTube.Controllers.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 namespace MovieTube
@@ -17,6 +18,8 @@ namespace MovieTube
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectionString"));
                 
             });
+
+            builder.Services.AddScoped<IUserMovieRepository, UserMovieRepository>();
 
             var app = builder.Build();
 
