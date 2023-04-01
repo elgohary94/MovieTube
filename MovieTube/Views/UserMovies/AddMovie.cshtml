@@ -1,0 +1,33 @@
+﻿@model Movie
+<form asp-action="CreateNewMovie" asp-controller="UserMovies" method="post">
+    <input asp-for="Title" />
+    <input asp-for="Description" />
+    <input asp-for="Year" />
+    <input asp-for="MovieNationality" />
+    <input asp-for="Actors" />
+    <input asp-for="Poster" />
+    <input type="submit" class="btn btn-success" />
+
+</form>
+
+
+
+@* public string Title { get; set; }
+
+        [MaxLength(220)]
+        public string Description { get; set; }
+
+        public int Year { get; set; }
+
+        public int MovieNationality { get; set; }
+
+
+        public List<Actor> Actors{ get; set; }
+
+
+        public byte[] Poster { get; set; }
+
+        [ForeignKey("Genre")]
+        public int GenreID { get; set; }
+
+        public Genre Genre { get; set; }*@

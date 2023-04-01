@@ -24,16 +24,17 @@ namespace MovieTube.Controllers.Repositories
         {
             try
             {
-                var Movie = await _Context.Movies.FindAsync(id);
+                var movie = await _Context.Movies.FindAsync(id);
+                
+                return movie;
 
             }
             catch (Exception ex)
             {
 
-                throw ex.Message;
+                throw;
                 
             }
-                return Movie;
 
         }
 
