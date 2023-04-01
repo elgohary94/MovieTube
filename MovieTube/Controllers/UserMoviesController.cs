@@ -18,9 +18,18 @@ namespace MovieTube.Controllers
             _userMovieRepository = userMovieRepository;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> ViewUserMovies()
         {
-            return View();
+            var AllMovies = await _userMovieRepository.GetAllMovies();
+            return View(AllMovies);
+        }
+
+        public async Task<IActionResult> WatchMovie(int id) 
+        {
+   //posibale exception if result is null => will make an error page and handle the exception in view
+            var Result = await _userMovieRepository.FindMovieById(id);
+
+            return View(Result);
         }
 
        

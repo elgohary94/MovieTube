@@ -20,6 +20,23 @@ namespace MovieTube.Controllers.Repositories
             return await _Context.Movies.ToListAsync();
         }
 
+        public async Task<Movie> FindMovieById(int id)
+        {
+            try
+            {
+                var Movie = await _Context.Movies.FindAsync(id);
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex.Message;
+                
+            }
+                return Movie;
+
+        }
+
         public async Task<Movie> CreateMovie(Movie movie)
         {
             await _Context.Movies.AddAsync(movie);
