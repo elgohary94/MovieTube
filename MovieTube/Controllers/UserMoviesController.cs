@@ -29,17 +29,37 @@ namespace MovieTube.Controllers
 
         public IActionResult AddMovie()
         {
+            ViewBag.genre = _userMovieRepository.GetAllGenre();
             var movie = new Movie();
             return View(movie);
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateNewMovie([FromForm] Movie Movie)
+        public async Task<IActionResult> CreateNewMovie([FromForm] Movie movie)
         {
-            
-                return RedirectToAction("ViewUserMovies");
+            if (ModelState.IsValid)
+            {
+                if (Request.Form.Files.Count > 0)
+                {
+                    var file = Request.Form.Files[0];
+                    if (file.Length > 0)
+                    {
+                        using (var ms = new MemoryStream())
+                        {
+                            file.CopyTo(ms);
+                            movie.Poster = (IFormFile)ms;
+                        }
+                    }
+                }
 
+                // Save the movie to the repository and redirect to the view movies action
+                await _userMovieRepository.CreateMovie(movie);
+                return RedirectToAction("ViewUserMovies");
+            }
+
+            return View("AddMovie", movie);
         }
+
 
         public async Task<IActionResult> WatchMovie(int id) 
         {

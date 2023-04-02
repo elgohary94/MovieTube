@@ -19,6 +19,11 @@ namespace MovieTube.Controllers.Repositories
         {
             return await _Context.Movies.ToListAsync();
         }
+        
+        public async Task<List<Genre>> GetAllGenre()
+        {
+            return await _Context.Genres.ToListAsync();
+        }
 
         public async Task<Movie> FindMovieById(int id)
         {

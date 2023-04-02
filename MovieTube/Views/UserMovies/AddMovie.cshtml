@@ -1,12 +1,19 @@
 ﻿@model Movie
-<form asp-action="CreateNewMovie" asp-controller="UserMovies" method="post">
+<form asp-action="CreateNewMovie" asp-controller="UserMovies" method="post" enctype="multipart/form-data">
     <div asp-validation-summary="All"></div>
     <input asp-for="Title" />
     <input type="text" asp-for="Description" />
     <input type="date" asp-for="Year" />
     <input asp-for="MovieNationality" />
     <input asp-for="Actors" />
-    <input type="file" asp-for="Poster" />
+        <select >
+
+
+        <option>@ViewBag.genre</option>
+    
+        </select>
+    
+    <input type="file" name="Poster" />
     <input type="submit" class="btn btn-success" />
 
 </form>
