@@ -12,9 +12,9 @@ namespace MovieTube.Models
         [MaxLength(220)]
         public string Description { get; set; }
 
-        public int Year { get; set; }
+        public string Year { get; set; }
 
-        public int MovieNationality { get; set; }
+        public string MovieNationality { get; set; }
 
 
         public List<Actor> Actors{ get; set; }

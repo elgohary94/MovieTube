@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MovieTube.Models;
 
@@ -10,9 +11,11 @@ using MovieTube.Models;
 namespace MovieTube.Migrations
 {
     [DbContext(typeof(MovieDbContext))]
-    partial class MovieDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230402152243_edityearcolumndatatypeinmovietable")]
+    partial class edityearcolumndatatypeinmovietable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -89,9 +92,8 @@ namespace MovieTube.Migrations
                     b.Property<int>("GenreID")
                         .HasColumnType("int");
 
-                    b.Property<string>("MovieNationality")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("MovieNationality")
+                        .HasColumnType("int");
 
                     b.Property<byte[]>("Poster")
                         .IsRequired()

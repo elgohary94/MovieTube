@@ -18,15 +18,13 @@ namespace MovieTube.Controllers
             _userMovieRepository = userMovieRepository;
         }
 
+
+
+
         public async Task<IActionResult> ViewUserMovies()
         {
             var AllMovies = await _userMovieRepository.GetAllMovies();
             return View(AllMovies);
-        }
-
-        public IActionResult hit()
-        {
-            return Content("hii");
         }
 
         public IActionResult AddMovie()
@@ -36,7 +34,7 @@ namespace MovieTube.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateNewMovie(Movie Movie)
+        public async Task<IActionResult> CreateNewMovie([FromForm] Movie Movie)
         {
             
                 return RedirectToAction("ViewUserMovies");
