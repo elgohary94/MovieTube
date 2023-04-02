@@ -8,12 +8,15 @@
     <input asp-for="Actors" />
         <select >
 
-
-        <option>@ViewBag.genre</option>
+        @foreach (var item in ViewBag.genre)
+        {
+            
+        <option>@item.Name</option>
+        }
     
         </select>
     
-    <input type="file" name="Poster" />
+    <input type="file" name="posterFile" />
     <input type="submit" class="btn btn-success" />
 
 </form>

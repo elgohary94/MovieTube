@@ -20,7 +20,7 @@ namespace MovieTube.Models
         public List<Actor> Actors{ get; set; }
 
 
-        public IFormFile Poster { get; set; }
+        public byte[] Poster { get; set; }
 
         [ForeignKey("Genre")]
         public int GenreID { get; set; }
