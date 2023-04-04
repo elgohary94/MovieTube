@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using MovieTube.DTOs;
@@ -14,9 +15,13 @@ namespace MovieTube.Controllers
     {
         private readonly IUserMovieRepository _userMovieRepository;
 
-        public UserMoviesController(IUserMovieRepository userMovieRepository)
+        private readonly IMapper _Mapper;
+        
+
+        public UserMoviesController(IUserMovieRepository userMovieRepository,IMapper mapper)
         {
             _userMovieRepository = userMovieRepository;
+            _Mapper = mapper;
         }
 
 
@@ -31,32 +36,36 @@ namespace MovieTube.Controllers
         public async Task<IActionResult> AddMovie()
         {
             TempData["genre"] = await _userMovieRepository.GetAllGenre();
-            var movie = new Movie();
+            var movie = new MovieDTO();
             return View(movie);
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateNewMovie([FromForm] MovieDTO movie,IFormFile posterFile)
+        public async Task<IActionResult> CreateNewMovie([FromForm] MovieDTO movie,IFormFile PosterFile)
         {
-            var newmovie = new Movie();
+            //var newmovie = new Movie();
             if (ModelState.IsValid)
             {
+            var result = _Mapper.Map<Movie>(movie);
             var genre = await _userMovieRepository.GetGenreById(movie.GenreId);
             movie.Genre = genre;
-                if (posterFile != null && posterFile.Length > 0)
+                if (PosterFile != null && PosterFile.Length > 0)
                 {
                     using (var stream = new MemoryStream())
                     {
-                        await posterFile.CopyToAsync(stream);
-                        newmovie.Poster = stream.ToArray();
+                        await PosterFile.CopyToAsync(stream);
+                        result.Poster = stream.ToArray();
+                        
                     }
+
+                    //var destinationObject = _mapper.Map<DestinationObject>(sourceObject);
                 }
-                newmovie.Genre = movie.Genre;
-                await _userMovieRepository.CreateMovie(newmovie);
+                //newmovie.Genre = movie.Genre;
+                await _userMovieRepository.CreateMovie(result);
                 return RedirectToAction("ViewUserMovies");
             }
             TempData["genre"] = await _userMovieRepository.GetAllGenre();
-            return View("AddMovie", newmovie);
+            return View("AddMovie", movie);
         }
 
 

@@ -1,4 +1,4 @@
-﻿@model Movie
+﻿@model MovieDTO
     
 <form asp-action="CreateNewMovie" asp-controller="UserMovies" method="post" enctype="multipart/form-data">
     <div asp-validation-summary="All"></div>
@@ -11,7 +11,7 @@
 
     </select>
     
-    <input type="file" name="posterFile" />
+    <input type="file" name="PosterFile" />
     <input type="submit" class="btn btn-success" />
 
 </form>

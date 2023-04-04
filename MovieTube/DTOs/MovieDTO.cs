@@ -10,7 +10,7 @@ namespace MovieTube.DTOs
 
         public string Description { get; set; }
 
-        public string Year { get; set; }
+        public DateTime Year { get; set; }
 
         public string MovieNationality { get; set; }
 
