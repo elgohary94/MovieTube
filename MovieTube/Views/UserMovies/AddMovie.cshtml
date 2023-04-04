@@ -1,4 +1,5 @@
 ﻿@model Movie
+    
 <form asp-action="CreateNewMovie" asp-controller="UserMovies" method="post" enctype="multipart/form-data">
     <div asp-validation-summary="All"></div>
     <input asp-for="Title" />
@@ -6,22 +7,14 @@
     <input type="date" asp-for="Year" />
     <input asp-for="MovieNationality" />
     <input asp-for="Actors" />
-        <select >
+    <select asp-for="GenreId" asp-items="@(new SelectList(TempData["genre"] as List<Genre>,"Id", "Name"))">
 
-        @foreach (var item in ViewBag.genre)
-        {
-            
-        <option>@item.Name</option>
-        }
-    
-        </select>
+    </select>
     
     <input type="file" name="posterFile" />
     <input type="submit" class="btn btn-success" />
 
 </form>
-
-
 
 @* public string Title { get; set; }
 

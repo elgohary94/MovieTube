@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using MovieTube.DTOs;
 
 namespace MovieTube.Controllers
 {
@@ -29,33 +30,31 @@ namespace MovieTube.Controllers
 
         public async Task<IActionResult> AddMovie()
         {
-            ViewBag.genre = await _userMovieRepository.GetAllGenre();
+            TempData["genre"] = await _userMovieRepository.GetAllGenre();
             var movie = new Movie();
             return View(movie);
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateNewMovie([FromForm] Movie movie,IFormFile posterFile)
+        public async Task<IActionResult> CreateNewMovie([FromForm] MovieDTO movie,IFormFile posterFile)
         {
-            
-            
+            var newmovie = new Movie();
+            if (ModelState.IsValid)
+            {
                 if (posterFile != null && posterFile.Length > 0)
                 {
                     using (var stream = new MemoryStream())
                     {
                         await posterFile.CopyToAsync(stream);
-                        movie.Poster = stream.ToArray();
+                        newmovie.Poster = stream.ToArray();
                     }
                 }
-
-
-
-                // Save the movie to the repository and redirect to the view movies action
-                await _userMovieRepository.CreateMovie(movie);
+                newmovie.Genre = movie.Genre;
+                await _userMovieRepository.CreateMovie(newmovie);
                 return RedirectToAction("ViewUserMovies");
-            
-
-            return View("AddMovie", movie);
+            }
+            TempData["genre"] = await _userMovieRepository.GetAllGenre();
+            return View("AddMovie", newmovie);
         }
 
 
