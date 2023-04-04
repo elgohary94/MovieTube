@@ -41,6 +41,8 @@ namespace MovieTube.Controllers
             var newmovie = new Movie();
             if (ModelState.IsValid)
             {
+            var genre = await _userMovieRepository.GetGenreById(movie.GenreId);
+            movie.Genre = genre;
                 if (posterFile != null && posterFile.Length > 0)
                 {
                     using (var stream = new MemoryStream())

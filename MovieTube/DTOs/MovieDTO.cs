@@ -18,7 +18,7 @@ namespace MovieTube.DTOs
 
         public int GenreId { get; set; }
 
-        public Genre Genre { get; set; }
+        public Genre? Genre { get; set; }
 
     }
 }
