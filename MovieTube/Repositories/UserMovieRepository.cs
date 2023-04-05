@@ -15,25 +15,24 @@ namespace MovieTube.Controllers.Repositories
             
         }
 
-        public async Task<List<Movie>> GetAllMovies()
+        public async Task<List<Movie>> GetAllMoviesAsync()
         {
             return await _Context.Movies.ToListAsync();
         }
         
-        public async Task<List<Genre>> GetAllGenre()
+        public async Task<List<Genre>> GetAllGenreAsync()
         {
             var gen = await _Context.Genres.ToListAsync();
             return gen; 
         }
 
-        public async Task<Genre> GetGenreById(int id)
+        public async Task<Genre> GetGenreByIdAsync(int id)
         {
             var genre = await _Context.Genres.FindAsync(id);
             return genre; 
         }
 
-
-        public async Task<Movie> FindMovieById(int id)
+        public async Task<Movie> FindMovieByIdAsync(int id)
         {
             try
             {
@@ -51,14 +50,13 @@ namespace MovieTube.Controllers.Repositories
 
         }
 
-        public async Task<Movie> CreateMovie(Movie movie)
+        public async Task CreateMovieAsync(Movie movie)
         {
             await _Context.Movies.AddAsync(movie);
             await _Context.SaveChangesAsync();
-            return movie;
         }
 
-        public async Task<Movie> UpdateMovie(int id, Movie movie)
+        public async Task UpdateMovieAsync(int id, Movie movie)
         {
             var OneMovie = await _Context.Movies.FirstOrDefaultAsync(m => m.ID == id);
 
@@ -72,19 +70,16 @@ namespace MovieTube.Controllers.Repositories
                 OneMovie.Poster = movie.Poster;
             }
                await _Context.SaveChangesAsync();
-
-               return OneMovie;
         }
 
-        public async Task<Movie> DeleteMovie(int id)
+        public async Task DeleteMovieAsync(int id)
         {
             var OneMovie = await _Context.Movies.FirstOrDefaultAsync(m => m.ID == id);
             if(OneMovie is not null )
             {
                 _Context.Remove(OneMovie);
+                await _Context.SaveChangesAsync();
             }
-
-            return OneMovie;
         }
     }
 }

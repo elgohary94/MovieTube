@@ -4,7 +4,8 @@
     foreach (var item in Model)
     {
         <div>
-            <img src="@item.Poster" />
+
+            <img src="data:image/jpg;base64,@Convert.ToBase64String(item.Poster)" />
             <a asp-action="WatchMovie" asp-controller="UserMovies">@item.Title</a>
         </div>
     }

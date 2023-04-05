@@ -1,3 +1,18 @@
-﻿@model Movie
+﻿@model MovieDTO
 
-//create movie viewer to view the movie itself and it's related content
+ <div>
+
+     <img src="data:image/jpg;base64,@Convert.ToBase64String(TempData["Poster"] as byte[])" />
+     <h2>@Model.Title</h2>
+     <p>@Model.Description</p>
+ @*  
+            ////////// is null
+            <h2>@Model.Genre.Name</h2>
+////////////////////////////////////////////////     
+ @foreach (var item in Model.Actors)
+     {
+         <h4>@item.FirstName @item.LastName</h4>
+ 
+     }
+ *@
+ </div>
