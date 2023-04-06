@@ -37,6 +37,11 @@ namespace MovieTube.Controllers.Repositories
             try
             {
                 var movie = await _Context.Movies.FindAsync(id);
+
+                if (movie is not null) 
+                {
+                    await _Context.Entry(movie).Reference(g=>g.Genre).LoadAsync();
+                }
                 
                 return movie;
 

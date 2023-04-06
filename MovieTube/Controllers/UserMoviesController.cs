@@ -16,7 +16,7 @@ namespace MovieTube.Controllers
         private readonly IUserMovieRepository _userMovieRepository;
 
         private readonly IMapper _Mapper;
-        
+
 
         public UserMoviesController(IUserMovieRepository userMovieRepository, IMapper mapper)
         {
@@ -32,7 +32,7 @@ namespace MovieTube.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> WatchMovie(int id) 
+        public async Task<IActionResult> WatchMovie(int id)
         {
             try
             {
@@ -45,7 +45,7 @@ namespace MovieTube.Controllers
             catch (Exception ex)
             {
                 return RedirectToAction("Error", "Home");
-            
+
             }
 
 
@@ -64,16 +64,16 @@ namespace MovieTube.Controllers
         {
             if (ModelState.IsValid)
             {
-            var result = _Mapper.Map<Movie>(movie);
-            var genre = await _userMovieRepository.GetGenreByIdAsync(movie.GenreId);
-            movie.Genre = genre;
+                var result = _Mapper.Map<Movie>(movie);
+                var genre = await _userMovieRepository.GetGenreByIdAsync(movie.GenreId);
+                movie.Genre = genre;
                 if (PosterFile != null && PosterFile.Length > 0)
                 {
                     using (var stream = new MemoryStream())
                     {
                         await PosterFile.CopyToAsync(stream);
                         result.Poster = stream.ToArray();
-                        
+
                     }
                 }
                 await _userMovieRepository.CreateMovieAsync(result);
@@ -84,16 +84,18 @@ namespace MovieTube.Controllers
         }
 
         //TODO => Create View to update the movie
-        public async Task<IActionResult> UpdateMovieView(int id)
+        [HttpGet]
+        public async Task<IActionResult> EditMovieInfo(int id)
         {
             var movie = await _userMovieRepository.FindMovieByIdAsync(id);
-            TempData["Poster"] = _userMovieRepository.GetGenreByIdAsync(movie.GenreId);
             var moviedto = _Mapper.Map<MovieDTO>(movie);
+            TempData["Genre"] = await _userMovieRepository.GetAllGenreAsync();
+            //TempData["Poster"] = movie.Poster;
             return View(moviedto);
         }
 
-        [HttpPut]
-        public async Task<IActionResult> UpdateMovie(int id, [FromForm] MovieDTO movie, IFormFile PosterFile)
+        [HttpPost]
+        public async Task<IActionResult> UpdateMovie(int id, [FromForm] MovieDTO movie, IFormFile? PosterFile)
         {
             if (ModelState.IsValid)
             {
@@ -112,7 +114,7 @@ namespace MovieTube.Controllers
             else
             {
                 ModelState.AddModelError("Error","Make Sure To Fill All The Fields!");
-                return RedirectToAction("UpdateMovieView");   
+                return RedirectToAction("EditMovieInfo");   
             }
 
         }

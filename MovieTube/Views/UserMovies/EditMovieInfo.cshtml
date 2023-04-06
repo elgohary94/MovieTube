@@ -1,0 +1,26 @@
+﻿@model MovieDTO
+
+
+<form asp-action="UpdateMovie" asp-controller="UserMovies" method="post" enctype="multipart/form-data">
+    <div asp-validation-summary="All"></div>
+    <input asp-for="Title" value="@Model.Title"/>
+    <input type="text" asp-for="Description" value="@Model.Description" />
+    <input type="date" asp-for="Year" value="@Model.Year" />
+    <input asp-for="MovieNationality" value="@Model.MovieNationality" />
+    @foreach (var item in Model.Actors)
+    {
+    <input asp-for="Actors" value="@item.FirstName" />
+        
+    }
+
+    <select asp-for="GenreId" asp-items="@(new SelectList(TempData["Genre"] as List<Genre>,"Id", "Name",@Model.Genre.Name))">
+        
+
+
+    </select>
+    
+    <input type="file" name="PosterFile" />
+    <input type="submit" class="btn btn-success" />
+
+
+</form>
