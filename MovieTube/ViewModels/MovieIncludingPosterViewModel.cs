@@ -2,10 +2,12 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
-namespace MovieTube.DTOs
+namespace MovieTube.ViewModels
 {
-    public class MovieDTO
+    public class MovieIncludingPosterViewModel
     {
+        public int ID { get; set; }
+
         public string Title { get; set; }
 
         public string Description { get; set; }
@@ -16,9 +18,10 @@ namespace MovieTube.DTOs
 
         public List<Actor> Actors { get; set; }
 
+        public byte[] Poster { get; set; }
+
         public int GenreId { get; set; }
 
         public Genre? Genre { get; set; }
-
     }
 }

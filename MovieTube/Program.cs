@@ -1,5 +1,5 @@
 global using MovieTube.Models;
-global using MovieTube.DTOs;
+global using MovieTube.ViewModels;
 global using MovieTube.Controllers.Repositories;
 global using AutoMapper;
 using Microsoft.EntityFrameworkCore;

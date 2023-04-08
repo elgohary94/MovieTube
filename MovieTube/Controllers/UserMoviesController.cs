@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using MovieTube.DTOs;
+using MovieTube.ViewModels;
 
 namespace MovieTube.Controllers
 {
@@ -36,9 +36,9 @@ namespace MovieTube.Controllers
         {
             try
             {
-                var Result = await _userMovieRepository.FindMovieByIdAsync(id);
-                TempData["Poster"] = Result.Poster;
-                var MappedMovie = _Mapper.Map<MovieDTO>(Result);
+                var Result = await _userMovieRepository.GetMovieByIdAsync(id);
+                TempData["Post"] = Result.Poster;
+                var MappedMovie = _Mapper.Map<MovieWithoutPosterViewModel>(Result);
                 return View(MappedMovie);
 
             }
@@ -55,12 +55,12 @@ namespace MovieTube.Controllers
         public async Task<IActionResult> AddMovie()
         {
             TempData["genre"] = await _userMovieRepository.GetAllGenreAsync();
-            var movie = new MovieDTO();
+            var movie = new MovieWithoutPosterViewModel();
             return View(movie);
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateNewMovie([FromForm] MovieDTO movie, IFormFile PosterFile)
+        public async Task<IActionResult> CreateNewMovie([FromForm] MovieWithoutPosterViewModel movie, IFormFile PosterFile)
         {
             if (ModelState.IsValid)
             {
@@ -85,21 +85,40 @@ namespace MovieTube.Controllers
 
         //TODO => Create View to update the movie
         [HttpGet]
-        public async Task<IActionResult> EditMovieInfo(int id)
+        public async Task<IActionResult> EditMovieInfo(int ID)
         {
-            var movie = await _userMovieRepository.FindMovieByIdAsync(id);
-            var moviedto = _Mapper.Map<MovieDTO>(movie);
-            TempData["Genre"] = await _userMovieRepository.GetAllGenreAsync();
-            //TempData["Poster"] = movie.Poster;
-            return View(moviedto);
+            var movie = await _userMovieRepository.GetMovieByIdAsync(ID);
+            var MovieWithPosterViewModel = _Mapper.Map<MovieIncludingPosterViewModel>(movie);
+            //TempData["Genre"] = await _userMovieRepository.GetAllGenreAsync();
+            ViewBag.Poster = MovieWithPosterViewModel.Poster;
+            
+            return View(MovieWithPosterViewModel);
         }
 
         [HttpPost]
-        public async Task<IActionResult> UpdateMovie(int id, [FromForm] MovieDTO movie, IFormFile? PosterFile)
+        public async Task<IActionResult> UpdateMovie([FromRoute]int ID, [FromForm] MovieWithoutPosterViewModel movie, IFormFile? PosterFile)
         {
+            var MappedMovie = _Mapper.Map<Movie>(movie);
+            if(PosterFile is null)
+            {
+                try
+                {
+
+                    var DBMovie = await _userMovieRepository.GetMovieByIdAsync(ID);
+                    if(DBMovie is not null)
+                    {
+                        MappedMovie.Poster = DBMovie.Poster;
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    return RedirectToAction("Error", "Home");
+
+                }
+            }
             if (ModelState.IsValid)
             {
-                var MappedMovie = _Mapper.Map<Movie>(movie);
                 if (PosterFile is not null && PosterFile.Length > 0)
                 {
                     using (var Stream = new MemoryStream())
@@ -108,12 +127,13 @@ namespace MovieTube.Controllers
                         MappedMovie.Poster= Stream.ToArray();
                     }
                 }
-                    await _userMovieRepository.UpdateMovieAsync(id, MappedMovie);
-                    return RedirectToAction("WatchMovie", id);
+                    await _userMovieRepository.UpdateMovieAsync(ID, MappedMovie);
+                    return RedirectToAction("WatchMovie", ID);
             }
             else
             {
                 ModelState.AddModelError("Error","Make Sure To Fill All The Fields!");
+                //TempData["Poster"] = movie.Poster;
                 return RedirectToAction("EditMovieInfo");   
             }
 

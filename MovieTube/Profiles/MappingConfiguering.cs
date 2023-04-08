@@ -1,4 +1,4 @@
-﻿using MovieTube.DTOs;
+﻿using MovieTube.ViewModels;
 using MovieTube.Migrations;
 
 namespace MovieTube.Profiles
@@ -7,7 +7,8 @@ namespace MovieTube.Profiles
     {
         public MappingConfiguering()
         {
-            CreateMap<MovieDTO, Movie>().ReverseMap();
+            CreateMap<MovieWithoutPosterViewModel, Movie>().ReverseMap();
+            CreateMap<Movie,MovieIncludingPosterViewModel>().ReverseMap();
         }
     }
 }

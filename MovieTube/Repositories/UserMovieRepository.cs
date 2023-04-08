@@ -9,10 +9,11 @@ namespace MovieTube.Controllers.Repositories
     public class UserMovieRepository : IUserMovieRepository
     {
         private readonly MovieDbContext _Context;
-        public UserMovieRepository(MovieDbContext context)
+        private readonly IMapper _Mapper;
+        public UserMovieRepository(MovieDbContext context, IMapper mapper)
         {
             _Context = context;
-            
+            _Mapper = mapper;
         }
 
         public async Task<List<Movie>> GetAllMoviesAsync()
@@ -32,11 +33,13 @@ namespace MovieTube.Controllers.Repositories
             return genre; 
         }
 
-        public async Task<Movie> FindMovieByIdAsync(int id)
+        public async Task<Movie> GetMovieByIdAsync(int id)
         {
             try
             {
-                var movie = await _Context.Movies.Include(g=>g.Genre).FirstOrDefaultAsync(m=>m.ID==id);
+                var movie = await _Context.Movies
+                                  .Include(g=>g.Genre)
+                                  .FirstOrDefaultAsync(m=>m.ID==id);
 
                 //if (movie is not null) 
                 //{
@@ -63,18 +66,14 @@ namespace MovieTube.Controllers.Repositories
 
         public async Task UpdateMovieAsync(int id, Movie movie)
         {
+
             var OneMovie = await _Context.Movies.FirstOrDefaultAsync(m => m.ID == id);
 
             if(OneMovie is not null )
             {
-                OneMovie.Title = movie.Title;
-                OneMovie.Actors = movie.Actors;
-                OneMovie.Description = movie.Description;
-                OneMovie.Genre = movie.Genre;
-                OneMovie.MovieNationality = movie.MovieNationality;
-                OneMovie.Poster = movie.Poster;
-            }
+               _Mapper.Map<Movie>(movie);  
                await _Context.SaveChangesAsync();
+            }
         }
 
         public async Task DeleteMovieAsync(int id)

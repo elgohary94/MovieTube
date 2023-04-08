@@ -1,8 +1,8 @@
-﻿@model MovieDTO
+﻿@model MovieWithoutPosterViewModel
 
  <div>
 
-     <img src="data:image/jpg;base64,@Convert.ToBase64String(TempData["Poster"] as byte[])" />
+     <img src="data:image/jpg;base64,@Convert.ToBase64String(TempData["Post"] as byte[])" />
      <h2>@Model.Title</h2>
      <p>@Model.Description</p>
  @*  
