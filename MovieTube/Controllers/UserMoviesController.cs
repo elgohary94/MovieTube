@@ -17,16 +17,20 @@ namespace MovieTube.Controllers
 
         private readonly IMapper _Mapper;
 
+        private readonly ILogger<UserMoviesController> _logger;
 
-        public UserMoviesController(IUserMovieRepository userMovieRepository, IMapper mapper)
+
+        public UserMoviesController(IUserMovieRepository userMovieRepository, IMapper mapper, ILogger<UserMoviesController> logger)
         {
             _userMovieRepository = userMovieRepository;
             _Mapper = mapper;
+            _logger = logger;
         }
 
         [HttpGet]
         public async Task<IActionResult> ViewAllMovies()
         {
+            _logger.LogInformation("user asked for all movies");
             var AllMovies = await _userMovieRepository.GetAllMoviesAsync();
             return View(AllMovies);
         }

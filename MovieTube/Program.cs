@@ -4,6 +4,7 @@ global using MovieTube.Controllers.Repositories;
 global using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using MovieTube.Profiles;
+using Serilog;
 
 namespace MovieTube
 {
@@ -11,8 +12,20 @@ namespace MovieTube
     {
         public static void Main(string[] args)
         {
+
+            var Configuration = new ConfigurationBuilder()
+                                    .AddJsonFile("appsettings.json")
+                                    .Build();
+
+            Log.Logger = new LoggerConfiguration()
+                             .ReadFrom
+                             .Configuration(Configuration)
+                             .CreateLogger();
+
+            
             var builder = WebApplication.CreateBuilder(args);
 
+            builder.Host.UseSerilog();
             // Add services to the container.
             builder.Services.AddControllersWithViews();
             builder.Services.AddDbContext<MovieDbContext>(options =>
