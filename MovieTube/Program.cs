@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using MovieTube.Profiles;
 using Serilog;
 using Microsoft.AspNetCore.Identity;
+using MovieTube.Repositories;
 
 namespace MovieTube
 {
@@ -42,6 +43,7 @@ namespace MovieTube
             builder.Services.AddAutoMapper(typeof(MappingConfiguering));
 
             builder.Services.AddScoped<IUserMovieRepository, UserMovieRepository>();
+            builder.Services.AddScoped<IIdentityUserRepository, IdentityUserRepository>();
 
             var app = builder.Build();
 
