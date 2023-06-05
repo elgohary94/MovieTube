@@ -35,7 +35,7 @@ namespace MovieTube
                 
             });
 
-            //configuering identity
+            //configuring identity
             builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<MovieDbContext>();
 
             builder.Host.UseSerilog();
