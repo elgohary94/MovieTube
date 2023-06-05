@@ -30,7 +30,6 @@ namespace MovieTube.Controllers
         [HttpGet]
         public async Task<IActionResult> ViewAllMovies()
         {
-            _logger.LogInformation("user asked for all movies");
             var AllMovies = await _userMovieRepository.GetAllMoviesAsync();
             return View(AllMovies);
         }
