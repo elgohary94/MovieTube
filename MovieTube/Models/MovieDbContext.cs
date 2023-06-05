@@ -1,8 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
 namespace MovieTube.Models
 {
-    public class MovieDbContext : DbContext
+    public class MovieDbContext : IdentityDbContext
     {
         public MovieDbContext(DbContextOptions<MovieDbContext> options):base(options)
         {

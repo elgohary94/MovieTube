@@ -5,6 +5,7 @@ global using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using MovieTube.Profiles;
 using Serilog;
+using Microsoft.AspNetCore.Identity;
 
 namespace MovieTube
 {
@@ -25,7 +26,6 @@ namespace MovieTube
             
             var builder = WebApplication.CreateBuilder(args);
 
-            builder.Host.UseSerilog();
             // Add services to the container.
             builder.Services.AddControllersWithViews();
             builder.Services.AddDbContext<MovieDbContext>(options =>
@@ -35,6 +35,10 @@ namespace MovieTube
                 
             });
 
+            //configuering identity
+            builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<MovieDbContext>();
+
+            builder.Host.UseSerilog();
             builder.Services.AddAutoMapper(typeof(MappingConfiguering));
 
             builder.Services.AddScoped<IUserMovieRepository, UserMovieRepository>();
@@ -54,6 +58,7 @@ namespace MovieTube
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllerRoute(
