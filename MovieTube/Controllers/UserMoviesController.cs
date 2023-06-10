@@ -33,7 +33,7 @@ namespace MovieTube.Controllers
             var AllMovies = await _userMovieRepository.GetAllMoviesAsync();
             return View(AllMovies);
         }
-
+ 
         [HttpGet]
         public async Task<IActionResult> WatchMovie(int id)
         {
@@ -80,7 +80,7 @@ namespace MovieTube.Controllers
                     }
                 }
                 await _userMovieRepository.CreateMovieAsync(result);
-                return RedirectToAction("ViewUserMovies");
+                return RedirectToAction("ViewAllMovies");
             }
             TempData["genre"] = await _userMovieRepository.GetAllGenreAsync();
             return View("AddMovie", movie);
