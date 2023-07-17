@@ -44,6 +44,7 @@ namespace MovieTube
 
             builder.Services.AddScoped<IUserMovieRepository, UserMovieRepository>();
             builder.Services.AddScoped<IIdentityUserRepository, IdentityUserRepository>();
+            builder.Services.AddScoped<IIdentityRoleRepository, IdentityRoleRepository>();
 
             var app = builder.Build();
 

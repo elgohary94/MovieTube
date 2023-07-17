@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace MovieTube.Repositories;
 
-public class IdentityRoleRepository
+public class IdentityRoleRepository : IIdentityRoleRepository
 {
     private readonly RoleManager<IdentityRole> _roleManager;
 
@@ -11,12 +11,19 @@ public class IdentityRoleRepository
         _roleManager = roleManager;
     }
 
+    public List<IdentityRole> GetallRoles()
+    {
+        var roleslist = _roleManager.Roles.ToList();
+
+        return roleslist;
+    }
+
     public async Task<IdentityResult> CreateRole(NewRoleViewModel role)
     {
         var createdRole = new IdentityRole(role.RoleName);
         var result = await _roleManager.CreateAsync(createdRole);
         return result;
-        
+
     }
 
     public async Task<IdentityResult> RemoveRole(string roleName)
@@ -30,7 +37,7 @@ public class IdentityRoleRepository
         }
         catch (Exception e)
         {
-            
+
             throw e;
         }
 
