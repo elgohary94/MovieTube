@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using MovieTube.Models;
 
 namespace MovieTube.Repositories
 {
@@ -18,25 +19,28 @@ namespace MovieTube.Repositories
         }
 
 
-        public async Task<IdentityResult> RegisterUser(RegisterUserViewModel user)
+        public async Task<IdentityResult> RegisterUserAsync(RegisterUserViewModel user)
         {
 
             var NewUser = _Mapper.Map<IdentityUser>(user);
 
             var Result = await _User.CreateAsync(NewUser, user.Password);
-
+            
             return Result;
         }
 
-        public async Task<SignInResult> UserLogin(UserLogInViewModel login)
+        public async Task<UserWapper> UserLoginAsync(UserLogInViewModel login)
         {
             try
             {
-                var FoundUser = await _User.FindByNameAsync(login.UserName);
+                UserWapper userwrapper = new();
+                
+                userwrapper.user = await _User.FindByNameAsync(login.UserName);
 
-                var signinresult = await _SignInManager.PasswordSignInAsync(FoundUser, login.PassWord,
+                userwrapper.signInResult = await _SignInManager.PasswordSignInAsync(userwrapper.user, login.PassWord,
                     login.IsPersistent, false);
-                return signinresult;
+                
+                return userwrapper;
 
             }
             catch (Exception e)
@@ -47,9 +51,26 @@ namespace MovieTube.Repositories
 
         }
 
-        public async Task UserLogout()
+        public async Task UserLogoutAsync()
         {
             await _SignInManager.SignOutAsync();
         }
-    }
+
+        public async Task<IdentityUser> FindUserByNameAsync(string UserName)
+        {
+            var FoundUser = await _User.FindByNameAsync(UserName);
+            return FoundUser;
+        }
+
+        public async Task<IdentityUser> FindUserByEmailAsync(string Email)
+        {
+            var FoundUser = await _User.FindByEmailAsync(Email);
+            return FoundUser;
+        }
+
+        public async Task<bool> FindUserRoleAsync(IdentityUser founduser)
+        {
+           return await _User.IsInRoleAsync(founduser, "User");
+        }
+    }  
 }

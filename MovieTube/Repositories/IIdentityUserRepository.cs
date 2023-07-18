@@ -4,8 +4,11 @@ namespace MovieTube.Repositories
 {
     public interface IIdentityUserRepository
     {
-        Task<IdentityResult> RegisterUser(RegisterUserViewModel user);
-        Task<SignInResult> UserLogin(UserLogInViewModel login);
-        Task UserLogout();
+        Task<IdentityResult> RegisterUserAsync(RegisterUserViewModel user);
+        Task<UserWapper> UserLoginAsync(UserLogInViewModel login);
+        Task UserLogoutAsync();
+        Task<IdentityUser> FindUserByNameAsync(string UserName);
+        Task<IdentityUser> FindUserByEmailAsync(string Email);
+        Task<bool> FindUserRoleAsync(IdentityUser founduser);
     }
 }
