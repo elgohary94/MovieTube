@@ -1,33 +1,41 @@
 ﻿@model RegisterUserViewModel
 
 <form method="post" asp-action="Register" asp-controller="User">
-    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="row">
+        <div class="col-md-8">
+
+
+            <div class="form-group">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            </div>
  
-    <label asp-for="UserName"></label>
-    <input asp-for="UserName" />
+            <div class="form-group">
+                <label asp-for="UserName"></label>
+                <input asp-for="UserName" />
+                <span asp-validation-for="UserName" class="text-danger"></span>
+            </div>
+    
+            <div class="form-group">
+                <label asp-for="Email"></label>
+                <input asp-for="Email" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
 
-    <label asp-for="Email"></label>
-    <input asp-for="Email" />
+            <div class="form-group">
+                <label asp-for="Password"></label>
+                <input asp-for="Password" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
 
-    <label asp-for="Password"></label>
-    <input asp-for="Password" />
+            <div class="form-group">
+                <label asp-for="ConfirmPassword"></label>
+                <input asp-for="ConfirmPassword" />
+                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+            </div>
 
-    <label asp-for="ConfirmPassword"></label>
-    <input asp-for="ConfirmPassword" />
-
-    <input type="submit" value="Register" />
-
+            <div class="form-group">
+                <input type="submit" value="Register" />
+            </div>
+        </div>
+    </div>
 </form>
-
-
-@*c string Email { get; set;}
-
-        [Required]
-        [DataType(DataType.Password)]
-        public string Password { get; set; }
-
-        [Required]
-        [DataType(DataType.Password)]
-        [Compare("Password",ErrorMessage ="This Field Doesn't Match The Password Field")]
-        public string ConfirmPassword { get; set; }
-*@

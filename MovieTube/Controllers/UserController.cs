@@ -50,15 +50,25 @@ namespace MovieTube.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(UserLogInViewModel login) 
         {
-            UserWapper userwrapper = new();
-            userwrapper = await _user.UserLoginAsync(login);
-            if (userwrapper.signInResult.IsNotAllowed)
+            try
             {
+
+                UserWapper userwrapper = new();
+                userwrapper = await _user.UserLoginAsync(login);
+            }
+            catch (Exception)
+            {
+                ModelState.AddModelError("log in error", "User Name Or Password Is Incorrect!");
                 return View("Login", login);
+
             }
             //CREATE ROLE USER & ADMIN OTHERWISE => EXCEPTION >>> ROLE NOT FOUND 
-            bool isInUserRole= await _user.FindUserRoleAsync(userwrapper.user);
-            
+            //if (userwrapper.signInResult.)
+            //{
+            //}
+            //}
+            //bool isInUserRole= await _user.FindUserRoleAsync(userwrapper.user);
+
             return RedirectToAction("ViewAllMovies", "UserMovies");
 
             //if (isInUserRole)

@@ -12,11 +12,11 @@ public class RoleController : Controller
         _identityRole = identityRole;
     }
 
-    [HttpGet]
-    public async Task<IActionResult> Role()
-    {
-        return View();
-    }
+    //[HttpGet]
+    //public async Task<IActionResult> Role()
+    //{
+    //    return View();
+    //}
 
     [HttpPost]
     public async Task<IActionResult> Role(NewRoleViewModel roleViewModel)

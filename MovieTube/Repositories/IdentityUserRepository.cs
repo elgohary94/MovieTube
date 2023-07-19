@@ -46,7 +46,7 @@ namespace MovieTube.Repositories
             catch (Exception e)
             {
 
-                throw e;
+                throw;
             }
 
         }
