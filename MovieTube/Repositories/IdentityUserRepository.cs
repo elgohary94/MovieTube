@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using MovieTube.Models;
+using System.Security.Claims;
 
 namespace MovieTube.Repositories
 {
@@ -33,10 +34,11 @@ namespace MovieTube.Repositories
         {
             try
             {
+
                 UserWapper userwrapper = new();
                 
                 userwrapper.user = await _User.FindByNameAsync(login.UserName);
-
+                
                 userwrapper.signInResult = await _SignInManager.PasswordSignInAsync(userwrapper.user, login.PassWord,
                     login.IsPersistent, false);
                 

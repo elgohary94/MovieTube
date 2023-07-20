@@ -7,29 +7,39 @@ namespace MovieTube.Controllers
     public class UserController : Controller
     {
         private readonly IIdentityUserRepository _user;
+        private readonly SignInManager<IdentityUser> _signInManager;
 
-        public UserController(IIdentityUserRepository user)
+        public UserController(IIdentityUserRepository user, SignInManager<IdentityUser> signInManager)
         {
             _user = user;
+            _signInManager = signInManager;
         }
 
 
         [HttpGet]
         public ActionResult Register()
         {
-            RegisterUserViewModel user = new();
-            return View(user);
+            if (!User.Identity.IsAuthenticated)
+            {
+                RegisterUserViewModel user = new();
+                return View(user);
+            }
+            else
+            {
+                return RedirectToAction("ViewAllMovies", "UserMovies");
+            }
         }
 
         [HttpPost]
         public async Task<ActionResult> Register(RegisterUserViewModel user)
         {
+            
             var result = await _user.RegisterUserAsync(user);
             if (!result.Succeeded)
             {
                 foreach (var error in result.Errors)
                 {
-                    
+
                     ModelState.AddModelError("RegisterError", error.Description);
                 }
                 return View("Register", user);
@@ -43,8 +53,15 @@ namespace MovieTube.Controllers
         [HttpGet]
         public ActionResult Login() 
         {
-            UserLogInViewModel user = new();
-            return View(user);
+            if (!User.Identity.IsAuthenticated)
+            {
+                UserLogInViewModel user = new();
+                return View(user);
+            }
+            else
+            {
+                return RedirectToAction("ViewAllMovies", "UserMovies");
+            }
         }
 
         [HttpPost]
@@ -85,9 +102,17 @@ namespace MovieTube.Controllers
         }
 
         [HttpGet]
-        public async Task Logout() 
+        public async Task<IActionResult> Logout() 
         {
-           await _user.UserLogoutAsync();
+            if (User.Identity.IsAuthenticated)
+            {
+                await _user.UserLogoutAsync();
+                return RedirectToAction("ViewAllMovies", "UserMovies");
+            }
+            else
+            {
+                return View("Login");
+            }
         }
 
         public async Task<IActionResult> CheckUserAvilablity(string UserName)
