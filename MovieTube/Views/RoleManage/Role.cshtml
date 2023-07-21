@@ -1,0 +1,10 @@
+﻿@model NewRoleViewModel
+<form asp-action="Role" asp-controller="RoleManage">
+    <div asp-validation-summary="All"></div>
+
+    <label asp-for="RoleName"></label>
+    <input asp-for="RoleName" />
+    <span asp-validation-for="RoleName"></span>
+
+    <input type="submit" value="Add Role" />
+</form>

@@ -1,0 +1,16 @@
+﻿@model List<IdentityRole>
+
+    <table >
+        <thead>
+            <tr>Role Name</tr>
+            <tr>Operations</tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+        {
+            <tr>@item.Name</tr>
+@*            <tr><input type="button" class="btn btn-danger" href="/rolemanage/remove/@item.Name" /></tr>
+            <tr><a asp @*href="/rolemanage/remove/@item.Name"*@ class="btn btn-danger">Remove</a></tr>*@
+        }
+        </tbody>
+    </table>

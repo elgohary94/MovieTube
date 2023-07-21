@@ -4,8 +4,8 @@ namespace MovieTube.Repositories
 {
     public interface IIdentityRoleRepository
     {
-        List<IdentityRole> GetallRoles();
-        Task<IdentityResult> CreateRole(NewRoleViewModel role);
-        Task<IdentityResult> RemoveRole(string roleName);
+        Task<List<IdentityRole>> GetallRolesAsync();
+        Task<IdentityResult> CreateRoleAsync(NewRoleViewModel role);
+        Task<IdentityResult> RemoveRoleAsync(string roleName);
     }
 }

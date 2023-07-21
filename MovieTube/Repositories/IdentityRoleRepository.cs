@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace MovieTube.Repositories;
 
@@ -11,22 +12,30 @@ public class IdentityRoleRepository : IIdentityRoleRepository
         _roleManager = roleManager;
     }
 
-    public List<IdentityRole> GetallRoles()
+    public async Task<List<IdentityRole>> GetallRolesAsync()
     {
-        var roleslist = _roleManager.Roles.ToList();
+        var roleslist = await _roleManager.Roles.ToListAsync();
 
         return roleslist;
     }
 
-    public async Task<IdentityResult> CreateRole(NewRoleViewModel role)
+    public async Task<IdentityResult> CreateRoleAsync(NewRoleViewModel role)
     {
-        var createdRole = new IdentityRole(role.RoleName);
-        var result = await _roleManager.CreateAsync(createdRole);
-        return result;
+        try
+        {
+            var createdRole = new IdentityRole(role.RoleName);
+            var result = await _roleManager.CreateAsync(createdRole);
+            return result;
+        }
+        catch (Exception)
+        {
+
+            throw;
+        }
 
     }
 
-    public async Task<IdentityResult> RemoveRole(string roleName)
+    public async Task<IdentityResult> RemoveRoleAsync(string roleName)
     {
         try
         {
@@ -35,10 +44,10 @@ public class IdentityRoleRepository : IIdentityRoleRepository
             return deletionResult;
 
         }
-        catch (Exception e)
+        catch (Exception)
         {
 
-            throw e;
+            throw;
         }
 
     }
