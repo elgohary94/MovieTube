@@ -1,16 +1,51 @@
 ﻿@model List<IdentityRole>
 
-    <table >
+    <table class="table table-primary">
         <thead>
-            <tr>Role Name</tr>
-            <tr>Operations</tr>
+            <tr>
+                <th>Role Name</th>
+                <th>Operations</th>
+            </tr>
         </thead>
         <tbody>
             @foreach (var item in Model)
-        {
-            <tr>@item.Name</tr>
-@*            <tr><input type="button" class="btn btn-danger" href="/rolemanage/remove/@item.Name" /></tr>
-            <tr><a asp @*href="/rolemanage/remove/@item.Name" class="btn btn-danger">Remove</a></tr>*@
-        }
+            {
+                <tr>
+                    <td>@item.Name</td>
+                    @*<td><button href="/rolemanage/remove/@item.Name"  class="btn btn-danger"> remove</button></td>*@
+                <td>
+                    <form asp-action="Remove" asp-controller="RoleManage" method="post">
+                        <input type="hidden" name="Name" value="@item.Name" />
+                        <button type="submit" class="btn btn-danger">Remove</button>
+                    </form>
+                </td>
+                </tr>
+            
+            }
         </tbody>
     </table>
+
+@*
+<div class="table-responsive">
+    <table class="table table-primary">
+        <thead>
+            <tr>
+                <th scope="col">Column 1</th>
+                <th scope="col">Column 2</th>
+                <th scope="col">Column 3</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="" *ngFor="let prd of boughtProducts">
+                <td scope="row">{{prd.name}}</td>
+                <td scope="row">{{prd.price}}</td>
+                <td scope="row">{{prd.boughtAmount}}</td>
+                <!-- <td scope="row">{{prd.price}}</td> -->
+                <td><button (click)="refundProduct(prd)"> refund </button></td>
+                <!-- <td>R1C2</td>
+                <td>R1C3</td> -->
+            </tr>
+
+        </tbody>
+    </table>
+</div>*@

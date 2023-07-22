@@ -13,7 +13,7 @@ public class RoleManageController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> Role()
+    public IActionResult Role()
     {
         NewRoleViewModel model = new ();
         return View(model);
@@ -47,10 +47,10 @@ public class RoleManageController : Controller
         return View(roles);
     }
 
-    [HttpDelete]
-    public async Task<IActionResult> Remove(string RoleName)
+    [HttpPost]
+    public async Task<IActionResult> Remove( string Name)
     {
-        var x = await _identityRole.RemoveRoleAsync(RoleName);
+        var x = await _identityRole.RemoveRoleAsync(Name);
         if (!x.Succeeded)
         {
             foreach (var item in x.Errors)
