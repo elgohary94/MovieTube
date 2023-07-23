@@ -7,5 +7,6 @@ namespace MovieTube.Repositories
         Task<List<IdentityRole>> GetallRolesAsync();
         Task<IdentityResult> CreateRoleAsync(NewRoleViewModel role);
         Task<IdentityResult> RemoveRoleAsync(string roleName);
+        Task<List<string>> FindUserRoleAsync(IdentityUser user);
     }
 }

@@ -6,10 +6,12 @@ namespace MovieTube.Repositories;
 public class IdentityRoleRepository : IIdentityRoleRepository
 {
     private readonly RoleManager<IdentityRole> _roleManager;
+    private readonly UserManager<IdentityUser> _userManager;
 
-    public IdentityRoleRepository(RoleManager<IdentityRole> roleManager)
+    public IdentityRoleRepository(RoleManager<IdentityRole> roleManager,UserManager<IdentityUser> userManager)
     {
         _roleManager = roleManager;
+        _userManager = userManager;
     }
 
     public async Task<List<IdentityRole>> GetallRolesAsync()
@@ -50,6 +52,11 @@ public class IdentityRoleRepository : IIdentityRoleRepository
             throw;
         }
 
+    }
+
+    public async Task<List<string>> FindUserRoleAsync(IdentityUser user)
+    {
+        return (List<string>) await _userManager.GetRolesAsync(user);
     }
 }
 

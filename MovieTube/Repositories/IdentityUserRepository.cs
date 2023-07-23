@@ -20,13 +20,13 @@ namespace MovieTube.Repositories
         }
 
 
-        public async Task<IdentityResult> RegisterUserAsync(RegisterUserViewModel user)
+        public async Task<IdentityResult> RegisterUserAsync(RegisterUserViewModel user,string userRole)
         {
 
             var NewUser = _Mapper.Map<IdentityUser>(user);
 
             var Result = await _User.CreateAsync(NewUser, user.Password);
-            
+            var addedToRole = await _User.AddToRoleAsync(NewUser, userRole);
             return Result;
         }
 

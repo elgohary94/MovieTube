@@ -50,10 +50,10 @@ public class RoleManageController : Controller
     [HttpPost]
     public async Task<IActionResult> Remove( string Name)
     {
-        var x = await _identityRole.RemoveRoleAsync(Name);
-        if (!x.Succeeded)
+        var result = await _identityRole.RemoveRoleAsync(Name);
+        if (!result.Succeeded)
         {
-            foreach (var item in x.Errors)
+            foreach (var item in result.Errors)
             {
                 ModelState.AddModelError("Role Removing Error", item.Description);
                 

@@ -7,11 +7,13 @@ namespace MovieTube.Controllers
     public class UserController : Controller
     {
         private readonly IIdentityUserRepository _user;
+        private readonly IIdentityRoleRepository _role;
         private readonly SignInManager<IdentityUser> _signInManager;
 
-        public UserController(IIdentityUserRepository user, SignInManager<IdentityUser> signInManager)
+        public UserController(IIdentityUserRepository user,IIdentityRoleRepository role, SignInManager<IdentityUser> signInManager)
         {
             _user = user;
+            _role = role;
             _signInManager = signInManager;
         }
 
@@ -34,7 +36,7 @@ namespace MovieTube.Controllers
         public async Task<ActionResult> Register(RegisterUserViewModel user)
         {
             
-            var result = await _user.RegisterUserAsync(user);
+            var result = await _user.RegisterUserAsync(user,"User");
             if (!result.Succeeded)
             {
                 foreach (var error in result.Errors)
@@ -72,6 +74,22 @@ namespace MovieTube.Controllers
 
                 UserWapper userwrapper = new();
                 userwrapper = await _user.UserLoginAsync(login);
+                var userRole = await  _role.FindUserRoleAsync(userwrapper.user);
+                
+                foreach (var item in userRole)
+                {
+                    if (item != "Admin")
+                    {
+                        return RedirectToAction("ViewAllMovies", "UserMovies");
+
+                    }
+                    
+                }
+                //TODO => admin panel and redirect ro it 
+                return RedirectToAction("GetAllRoles", "RoleManage");
+                
+
+
             }
             catch (Exception)
             {
@@ -79,25 +97,7 @@ namespace MovieTube.Controllers
                 return View("Login", login);
 
             }
-            //CREATE ROLE USER & ADMIN OTHERWISE => EXCEPTION >>> ROLE NOT FOUND 
-            //if (userwrapper.signInResult.)
-            //{
-            //}
-            //}
-            //bool isInUserRole= await _user.FindUserRoleAsync(userwrapper.user);
-
-            return RedirectToAction("ViewAllMovies", "UserMovies");
-
-            //if (isInUserRole)
-            //{
-            //}
-
-            //TODO
-
-            //else
-            //{
-            //    return RedirectToAction(getadminpanel);
-            //}
+            
 
         }
 
