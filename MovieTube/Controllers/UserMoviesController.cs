@@ -35,7 +35,7 @@ namespace MovieTube.Controllers
         }
  
         [HttpGet]
-        public async Task<IActionResult> WatchMovie(int id)
+        public async Task<IActionResult> WatchMovie([FromRoute]int id)
         {
             try
             {

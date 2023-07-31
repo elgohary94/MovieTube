@@ -18,7 +18,7 @@ namespace MovieTube.Controllers.Repositories
 
         public async Task<List<Movie>> GetAllMoviesAsync()
         {
-            return await _Context.Movies.ToListAsync();
+            return await _Context.Movies.Include(m=>m.Genre).ToListAsync();
         }
         
         public async Task<List<Genre>> GetAllGenreAsync()

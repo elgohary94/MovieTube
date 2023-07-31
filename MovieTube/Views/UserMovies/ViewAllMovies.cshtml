@@ -1,11 +1,22 @@
 ﻿@model List<Movie>
-@{
-    foreach (var item in Model)
-    {
-        <div>
-
-            <img src="data:image/jpg;base64,@Convert.ToBase64String(item.Poster)" />
-            <a asp-action="WatchMovie" asp-controller="UserMovies">@item.Title</a>
-        </div>
-    }
-}
+<div class="container">
+    <div class="row justify-content-center">
+        @foreach (var item in Model)
+        {
+            <div class="col-lg-4 mb-5">
+                <div class="card h-100 shadow border-0">
+                    <img class="card-img-top" src="data:image/jpg;base64,@Convert.ToBase64String(item.Poster)" style="max-width:100%; max-height: 300px; aspect-ratio:auto; " alt="..." />
+                    <div class="card-body p-4">
+                        <div class="badge bg-primary bg-gradient rounded-pill mb-2">@item.Genre.Name</div>
+                        <a asp-action="WatchMovie" asp-controller="UserMovies" asp-route-id="@item.ID">@item.Title</a>
+                        <p class="card-text mb-0">@item.Description</p>
+                    </div>
+                    <div class="card-footer p-4 pt-0 bg-transparent border-top-0">
+                        <div class="d-flex align-items-end justify-content-between">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
