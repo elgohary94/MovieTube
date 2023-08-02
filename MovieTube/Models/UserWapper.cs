@@ -2,7 +2,7 @@
 
 namespace MovieTube.Models
 {
-    public class UserWapper
+    public class UserWrapper
     {
         public IdentityUser user { get; set; }
         public SignInResult signInResult { get; set; }

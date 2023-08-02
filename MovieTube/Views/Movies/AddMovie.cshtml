@@ -1,6 +1,6 @@
 ﻿@model MovieWithoutPosterViewModel
     
-<form asp-action="CreateNewMovie" asp-controller="UserMovies" method="post" enctype="multipart/form-data">
+<form asp-action="CreateNewMovie" asp-controller="Movies" method="post" enctype="multipart/form-data">
     <div asp-validation-summary="All"></div>
     <input asp-for="Title" />
     <input type="text" asp-for="Description" />

@@ -1,7 +1,7 @@
 ﻿@model MovieIncludingPosterViewModel
 
 
-<form asp-action="UpdateMovie" asp-controller="UserMovies" asp-route-ID="@Model.ID" method="post" enctype="multipart/form-data">
+<form asp-action="UpdateMovie" asp-controller="Movies" asp-route-ID="@Model.ID" method="post" enctype="multipart/form-data">
     <div asp-validation-summary="All"></div>
     <input asp-for="Title" value="@Model.Title"/>
     <input type="text" asp-for="Description" value="@Model.Description" />

@@ -6,11 +6,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MovieTube.Controllers.Repositories
 {
-    public class UserMovieRepository : IUserMovieRepository
+    public class MovieRepository : IMovieRepository
     {
         private readonly MovieDbContext _Context;
         private readonly IMapper _Mapper;
-        public UserMovieRepository(MovieDbContext context, IMapper mapper)
+        public MovieRepository(MovieDbContext context, IMapper mapper)
         {
             _Context = context;
             _Mapper = mapper;

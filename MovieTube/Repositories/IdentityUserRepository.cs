@@ -30,12 +30,12 @@ namespace MovieTube.Repositories
             return Result;
         }
 
-        public async Task<UserWapper> UserLoginAsync(UserLogInViewModel login)
+        public async Task<UserWrapper> UserLoginAsync(UserLogInViewModel login)
         {
             try
             {
 
-                UserWapper userwrapper = new();
+                UserWrapper userwrapper = new();
                 
                 userwrapper.user = await _User.FindByNameAsync(login.UserName);
                 

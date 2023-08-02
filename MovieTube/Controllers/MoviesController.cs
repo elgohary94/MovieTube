@@ -11,18 +11,18 @@ using MovieTube.ViewModels;
 namespace MovieTube.Controllers
 {
 
-    public class UserMoviesController : Controller
+    public class MoviesController : Controller
     {
-        private readonly IUserMovieRepository _userMovieRepository;
+        private readonly IMovieRepository _MovieRepository;
 
         private readonly IMapper _Mapper;
 
-        private readonly ILogger<UserMoviesController> _logger;
+        private readonly ILogger<MoviesController> _logger;
 
 
-        public UserMoviesController(IUserMovieRepository userMovieRepository, IMapper mapper, ILogger<UserMoviesController> logger)
+        public MoviesController(IMovieRepository MovieRepository, IMapper mapper, ILogger<MoviesController> logger)
         {
-            _userMovieRepository = userMovieRepository;
+            _MovieRepository = MovieRepository;
             _Mapper = mapper;
             _logger = logger;
         }
@@ -30,7 +30,7 @@ namespace MovieTube.Controllers
         [HttpGet]
         public async Task<IActionResult> ViewAllMovies()
         {
-            var AllMovies = await _userMovieRepository.GetAllMoviesAsync();
+            var AllMovies = await _MovieRepository.GetAllMoviesAsync();
             return View(AllMovies);
         }
  
@@ -39,7 +39,7 @@ namespace MovieTube.Controllers
         {
             try
             {
-                var Result = await _userMovieRepository.GetMovieByIdAsync(id);
+                var Result = await _MovieRepository.GetMovieByIdAsync(id);
                 TempData["Post"] = Result.Poster;
                 var MappedMovie = _Mapper.Map<MovieWithoutPosterViewModel>(Result);
                 return View(MappedMovie);
@@ -57,7 +57,7 @@ namespace MovieTube.Controllers
         [HttpGet]
         public async Task<IActionResult> AddMovie()
         {
-            TempData["genre"] = await _userMovieRepository.GetAllGenreAsync();
+            TempData["genre"] = await _MovieRepository.GetAllGenreAsync();
             var movie = new MovieWithoutPosterViewModel();
             return View(movie);
         }
@@ -68,7 +68,7 @@ namespace MovieTube.Controllers
             if (ModelState.IsValid)
             {
                 var result = _Mapper.Map<Movie>(movie);
-                var genre = await _userMovieRepository.GetGenreByIdAsync(movie.GenreId);
+                var genre = await _MovieRepository.GetGenreByIdAsync(movie.GenreId);
                 movie.Genre = genre;
                 if (PosterFile != null && PosterFile.Length > 0)
                 {
@@ -79,10 +79,10 @@ namespace MovieTube.Controllers
 
                     }
                 }
-                await _userMovieRepository.CreateMovieAsync(result);
+                await _MovieRepository.CreateMovieAsync(result);
                 return RedirectToAction("ViewAllMovies");
             }
-            TempData["genre"] = await _userMovieRepository.GetAllGenreAsync();
+            TempData["genre"] = await _MovieRepository.GetAllGenreAsync();
             return View("AddMovie", movie);
         }
 
@@ -90,9 +90,9 @@ namespace MovieTube.Controllers
         [HttpGet]
         public async Task<IActionResult> EditMovieInfo(int ID)
         {
-            var movie = await _userMovieRepository.GetMovieByIdAsync(ID);
+            var movie = await _MovieRepository.GetMovieByIdAsync(ID);
             var MovieWithPosterViewModel = _Mapper.Map<MovieIncludingPosterViewModel>(movie);
-            //TempData["Genre"] = await _userMovieRepository.GetAllGenreAsync();
+            //TempData["Genre"] = await _MovieRepository.GetAllGenreAsync();
             ViewBag.Poster = MovieWithPosterViewModel.Poster;
             
             return View(MovieWithPosterViewModel);
@@ -107,7 +107,7 @@ namespace MovieTube.Controllers
                 try
                 {
 
-                    var DBMovie = await _userMovieRepository.GetMovieByIdAsync(ID);
+                    var DBMovie = await _MovieRepository.GetMovieByIdAsync(ID);
                     if(DBMovie is not null)
                     {
                         MappedMovie.Poster = DBMovie.Poster;
@@ -130,7 +130,7 @@ namespace MovieTube.Controllers
                         MappedMovie.Poster= Stream.ToArray();
                     }
                 }
-                    await _userMovieRepository.UpdateMovieAsync(ID, MappedMovie);
+                    await _MovieRepository.UpdateMovieAsync(ID, MappedMovie);
                     return RedirectToAction("WatchMovie", ID);
             }
             else
@@ -145,7 +145,7 @@ namespace MovieTube.Controllers
         [HttpDelete]
         public async Task<IActionResult> DeleteMovie(int id)
         {
-            await _userMovieRepository.DeleteMovieAsync(id);
+            await _MovieRepository.DeleteMovieAsync(id);
             return RedirectToAction("ViewAllMovies");
         }
 

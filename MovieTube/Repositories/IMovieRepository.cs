@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace MovieTube.Controllers.Repositories
 {
-    public interface IUserMovieRepository
+    public interface IMovieRepository
     {
         public Task<List<Movie>> GetAllMoviesAsync();
         public Task<List<Genre>> GetAllGenreAsync();

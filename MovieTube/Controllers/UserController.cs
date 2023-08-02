@@ -28,7 +28,7 @@ namespace MovieTube.Controllers
             }
             else
             {
-                return RedirectToAction("ViewAllMovies", "UserMovies");
+                return RedirectToAction("ViewAllMovies", "Movies");
             }
         }
 
@@ -48,7 +48,7 @@ namespace MovieTube.Controllers
             }
             else
             {
-                return RedirectToAction("ViewAllMovies", "UserMovies");
+                return RedirectToAction("ViewAllMovies", "Movies");
             }
         }
 
@@ -62,7 +62,7 @@ namespace MovieTube.Controllers
             }
             else
             {
-                return RedirectToAction("ViewAllMovies", "UserMovies");
+                return RedirectToAction("ViewAllMovies", "Movies");
             }
         }
 
@@ -72,7 +72,7 @@ namespace MovieTube.Controllers
             try
             {
 
-                UserWapper userwrapper = new();
+                UserWrapper userwrapper = new();
                 userwrapper = await _user.UserLoginAsync(login);
                 var userRole = await  _role.FindUserRoleAsync(userwrapper.user);
                 
@@ -80,7 +80,7 @@ namespace MovieTube.Controllers
                 {
                     if (item != "Admin")
                     {
-                        return RedirectToAction("ViewAllMovies", "UserMovies");
+                        return RedirectToAction("ViewAllMovies", "Movies");
 
                     }
                     
@@ -107,7 +107,7 @@ namespace MovieTube.Controllers
             if (User.Identity.IsAuthenticated)
             {
                 await _user.UserLogoutAsync();
-                return RedirectToAction("ViewAllMovies", "UserMovies");
+                return RedirectToAction("ViewAllMovies", "Movies");
             }
             else
             {

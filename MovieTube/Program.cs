@@ -42,7 +42,7 @@ namespace MovieTube
             builder.Host.UseSerilog();
             builder.Services.AddAutoMapper(typeof(MappingConfiguering));
 
-            builder.Services.AddScoped<IUserMovieRepository, UserMovieRepository>();
+            builder.Services.AddScoped<IMovieRepository, MovieRepository>();
             builder.Services.AddScoped<IIdentityUserRepository, IdentityUserRepository>();
             builder.Services.AddScoped<IIdentityRoleRepository, IdentityRoleRepository>();
 
@@ -66,7 +66,7 @@ namespace MovieTube
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=UserMovies}/{action=ViewAllMovies}/{id?}");
+                pattern: "{controller=Movies}/{action=ViewAllMovies}/{id?}");
 
             app.Run();
         }
