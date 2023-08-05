@@ -1,37 +1,44 @@
 ﻿@model MovieWithoutPosterViewModel
     
-<form asp-action="CreateNewMovie" asp-controller="Movies" method="post" enctype="multipart/form-data">
-    <div asp-validation-summary="All"></div>
-    <input asp-for="Title" />
-    <input type="text" asp-for="Description" />
-    <input type="date" asp-for="Year" />
-    <input asp-for="MovieNationality" />
-    <input asp-for="Actors" />
-    <select asp-for="GenreId" asp-items="@(new SelectList(TempData["genre"] as List<Genre>,"Id", "Name"))">
+<div class="container" style=" background-color: #0f0f1a; color: #fff; font-family: Arial, sans-serif;">
+    <div style="display: flex; margin:auto; flex-direction: column; align-items: center; justify-content: center; height: 100vh;">
+        <div class="card" style="width: 300px; background-color: #1e213a; padding: 20px; border-radius: 10px; border-top: 4px solid #19d4ca; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);">
+            <form asp-action="CreateNewMovie" asp-controller="Movies" method="post" enctype="multipart/form-data" style="display: flex; flex-direction: column; gap: 10px;">
+                <div asp-validation-summary="All"></div>
+                <div>
 
-    </select>
-    
-    <input type="file" name="PosterFile" />
-    <input type="submit" class="btn btn-success" />
+                <label asp-for="Title"></label><br />
+                <input asp-for="Title" />
+                </div>
+                <div>
 
-</form>
+                    <label asp-for="Description"></label>
+                <input type="text" asp-for="Description" />
+                </div>
 
-@* public string Title { get; set; }
+                <div>
+                    <label asp-for="Year"></label><br />
+                <input type="date" asp-for="Year" />
+                </div>
+                <div>
+                    <label asp-for="MovieNationality"></label>
+                <input asp-for="MovieNationality" />
+                </div>
+                <div>
+                    <label asp-for="Actors"></label><br />
+                <input asp-for="Actors" />
+                </div>
+                <div>
+                    <label>Genre Name</label><br />
+                <select asp-for="GenreId" asp-items="@(new SelectList(TempData["genre"] as List<Genre>,"Id", "Name"))">
 
-        [MaxLength(220)]
-        public string Description { get; set; }
+                </select>
+                </div>
+                <label>Movie Poster</label>
+                <input type="file" name="PosterFile" />
+                <input type="submit" class="btn btn-success" />
 
-        public int Year { get; set; }
-
-        public int MovieNationality { get; set; }
-
-
-        public List<Actor> Actors{ get; set; }
-
-
-        public byte[] Poster { get; set; }
-
-        [ForeignKey("Genre")]
-        public int GenreID { get; set; }
-
-        public Genre Genre { get; set; }*@
+            </form>
+        </div>
+    </div>
+</div>
