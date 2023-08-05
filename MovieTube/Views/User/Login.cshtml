@@ -1,33 +1,38 @@
 ﻿@model UserLogInViewModel
 
-<form method="post" asp-action="Login" asp-controller="User">
-    <div class="row">
-        <div class="col-md-8">
+    <div class="container" style=" background-color: #0f0f1a; color: #fff; font-family: Arial, sans-serif;">
 
-            <div class="form-group">
-                <div asp-validation-summary="All" class="text-danger"></div>
-            </div>
+    <div  style="display: flex; margin:auto; flex-direction: column; align-items: center; justify-content: center; height: 100vh;">
 
-            <div class="form-group">
-                <label asp-for="UserName"></label>
-                <input asp-for="UserName" />
-            </div>
 
-            <div class="form-group">
+        <div class="card" style="width: 300px; background-color: #1e213a; padding: 20px; border-radius: 10px; border-top: 4px solid #19d4ca; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);">
+           <form method="post" asp-action="Login" asp-controller="User" style="display: flex; flex-direction: column; gap: 10px;">
+                <div >
+                    <div asp-validation-summary="All" class="text-danger"></div>
+                </div>
 
-                <label asp-for="PassWord"></label>
-                <input asp-for="PassWord" />
-            </div>
+                <div >
+                    <label asp-for="UserName"></label>
+                    <input asp-for="UserName" />
 
-            <div class="form-group">
-                <label asp-for="IsPersistent"></label>
-                <input asp-for="IsPersistent" />
-            </div>
+                </div>
 
-            <div class="form-group">
-                <input type="submit" value="Log In"/>
-            </div>
+                <div >
+
+                    <label asp-for="PassWord"></label>
+                    <input asp-for="PassWord" />
+                </div>
+
+                <div >
+                    <label asp-for="IsPersistent"></label>
+                    <input asp-for="IsPersistent" />
+                </div>
+
+
+                <input type="submit" value="Log In" class="btn btn-success"/>
+
+           </form>
+                    <a asp-action="Register" asp-controller="User" style="padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; transition: background-color 0.3s, box-shadow 0.3s, color 0.3s; text-decoration: none;">Don't have an account?</a>
         </div>
     </div>
-</form>
-<a asp-action="Register" asp-controller="User">Don't have an account?</a>
+    </div>

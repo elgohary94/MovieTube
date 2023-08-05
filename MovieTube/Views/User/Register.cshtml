@@ -1,42 +1,45 @@
 ﻿@model RegisterUserViewModel
 
-<form method="post" asp-action="Register" asp-controller="User">
-    <div class="row">
-        <div class="col-md-8">
+<div class="container" style="background-color: #0f0f1a; color: #fff; font-family: Arial, sans-serif;">
 
+    <div style="display: flex; margin:auto; flex-direction: column; align-items: center; justify-content: center; height: 100vh;">
+        <div class="card" style="width: 300px; background-color: #1e213a; padding: 20px; border-radius: 10px; border-top: 4px solid #19d4ca; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);">
+            <form method="post" asp-action="Register" asp-controller="User" style="display: flex; flex-direction: column; gap: 10px;">
 
-            <div class="form-group">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            </div>
- 
-            <div class="form-group">
-                <label asp-for="UserName"></label>
-                <input asp-for="UserName" />
-                <span asp-validation-for="UserName" class="text-danger"></span>
-            </div>
-    
-            <div class="form-group">
-                <label asp-for="Email"></label>
-                <input asp-for="Email" />
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
+                <div class="form-group">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                </div>
 
-            <div class="form-group">
-                <label asp-for="Password"></label>
-                <input asp-for="Password" />
-                <span asp-validation-for="Password" class="text-danger"></span>
-            </div>
+                <div class="form-group">
+                    <label asp-for="UserName"></label>
+                    <input asp-for="UserName" />
+                    <span asp-validation-for="UserName" class="text-danger"></span>
+                </div>
 
-            <div class="form-group">
-                <label asp-for="ConfirmPassword"></label>
-                <input asp-for="ConfirmPassword" />
-                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
-            </div>
+                <div class="form-group">
+                    <label asp-for="Email"></label><br />
+                    <input asp-for="Email" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
 
-            <div class="form-group">
-                <input type="submit" value="Register" />
-            </div>
+                <div class="form-group">
+                    <label asp-for="Password"></label>
+                    <input asp-for="Password" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="ConfirmPassword"></label>
+                    <input asp-for="ConfirmPassword" />
+                    <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                </div>
+
+                <input type="submit" value="Register" class="btn btn-success" />
+
+            </form>
+                <a asp-action="Login" asp-controller="User" style="padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; transition: background-color 0.3s, box-shadow 0.3s, color 0.3s; text-decoration: none;">Have an account?</a>
         </div>
     </div>
-</form>
-<a asp-action="Login" asp-controller="User">Have an account?</a>
+</div>
+
+                    
