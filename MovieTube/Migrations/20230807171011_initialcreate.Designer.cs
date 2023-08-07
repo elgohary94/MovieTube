@@ -12,7 +12,7 @@ using MovieTube.Models;
 namespace MovieTube.Migrations
 {
     [DbContext(typeof(MovieDbContext))]
-    [Migration("20230807165532_initialcreate")]
+    [Migration("20230807171011_initialcreate")]
     partial class initialcreate
     {
         /// <inheritdoc />

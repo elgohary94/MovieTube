@@ -21,6 +21,8 @@ namespace MovieTube.Models
         [Column(TypeName = "varbinary(MAX)")]
         public byte[] Poster { get; set; }
 
+        [ForeignKey("Genre")]
+        public int GenreId { get; set; }
         public Genre Genre { get; set; }
     }
 }
