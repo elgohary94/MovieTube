@@ -379,12 +379,17 @@ namespace MovieTube.Migrations
             modelBuilder.Entity("MovieTube.Models.Movie", b =>
                 {
                     b.HasOne("MovieTube.Models.Genre", "Genre")
-                        .WithMany()
+                        .WithMany("Movie")
                         .HasForeignKey("GenreId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Genre");
+                });
+
+            modelBuilder.Entity("MovieTube.Models.Genre", b =>
+                {
+                    b.Navigation("Movie");
                 });
 #pragma warning restore 612, 618
         }

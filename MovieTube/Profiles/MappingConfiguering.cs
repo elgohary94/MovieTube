@@ -1,5 +1,4 @@
 ﻿using MovieTube.ViewModels;
-using MovieTube.Migrations;
 using Microsoft.AspNetCore.Identity;
 
 namespace MovieTube.Profiles

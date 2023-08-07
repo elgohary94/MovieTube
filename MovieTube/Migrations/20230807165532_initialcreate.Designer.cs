@@ -12,8 +12,8 @@ using MovieTube.Models;
 namespace MovieTube.Migrations
 {
     [DbContext(typeof(MovieDbContext))]
-    [Migration("20230605140923_usingidentitypackages")]
-    partial class usingidentitypackages
+    [Migration("20230807165532_initialcreate")]
+    partial class initialcreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -382,12 +382,17 @@ namespace MovieTube.Migrations
             modelBuilder.Entity("MovieTube.Models.Movie", b =>
                 {
                     b.HasOne("MovieTube.Models.Genre", "Genre")
-                        .WithMany()
+                        .WithMany("Movie")
                         .HasForeignKey("GenreId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Genre");
+                });
+
+            modelBuilder.Entity("MovieTube.Models.Genre", b =>
+                {
+                    b.Navigation("Movie");
                 });
 #pragma warning restore 612, 618
         }
